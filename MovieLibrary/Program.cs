@@ -1,3 +1,20 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+using static System.Console;
+
+namespace MovieLibrary
+{
+    class Program 
+    {
+        public static void Main()
+        {
+            MainMenu.DisplayMenu();
+
+            ReadKey();
+            
+            
+        }
+
+    } 
+}
+
 
