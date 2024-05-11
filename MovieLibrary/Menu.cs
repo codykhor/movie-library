@@ -5,9 +5,11 @@ namespace MovieLibrary
 {
     public class MainMenu
     {
-        public static string DisplayMenu()
+        public static void DisplayMenu()
         {
-            while (true)
+            bool DisplayMainMenu = true;
+
+            while (DisplayMainMenu)
             {
 
                 WriteLine("======================================================");
@@ -31,11 +33,16 @@ namespace MovieLibrary
                     WriteLine();
                     continue;
                 }
+                else
+                {
+                    DisplayMainMenu = false;
+                }
 
                 switch(choice)
                 {
                     case 1:
-                        //StaffMenu.DisplayStaffMenu();
+                        Console.Clear();
+                        StaffMenu.DisplayStaffMenu();
                         break;
 
                     case 2:
