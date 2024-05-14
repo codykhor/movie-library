@@ -7,8 +7,8 @@ namespace MovieLibrary
 	{
         private string username;
 		private string password;
-
-		public StaffMember(string username, string password)
+        
+        public StaffMember(string username, string password)
 		{
 			this.username = username;
 			this.password = password;
@@ -19,35 +19,313 @@ namespace MovieLibrary
 			return username == usernameInput && password == passwordInput;
 		}
 
-		public void AddDVD()
+		public static void AddDVD()
 		{
-			
-		}
+            string title ="";
+            string genre = "";
+            string classification ="";
+            int duration;
+            int copies;
 
-		public void RemoveDVD()
+            Clear();
+            WriteLine("===================== Add DVD ========================");
+            WriteLine();
+            WriteLine("Enter DVD information below: | (0 to Exit)");
+            WriteLine("------------------------------------------------------");
+
+			// Get movie title
+			title = CheckTitleInput("Enter movie title: ");
+			WriteLine();
+
+			// Get movie genre
+			string[] genres = { "Drama", "Adventure", "Family", "Action", "Sci-fi", "Comedy", "Animated", "Thriller", "Other" };
+			WriteLine("Select movie genre: ");
+			for (int i = 0; i < genres.Length; i++)
+			{
+				WriteLine($"{i + 1}. {genres[i]}");
+			}
+            
+			int genreChoice;
+			bool isValidGenre = false;
+			while (!isValidGenre)
+			{
+                WriteLine();
+                WriteLine("Enter your choice: ");
+				string? input = ReadLine();
+
+				if (input == "0")
+				{
+					WriteLine();
+                    StaffMenu.DisplayStaffMenu();
+					break;
+				}
+				else if (int.TryParse(input, out genreChoice) && genreChoice >= 1 && genreChoice <= genres.Length)
+				{
+					genre = genres[genreChoice - 1];
+                    WriteLine();
+                    isValidGenre = true;
+				}
+				else
+				{
+                    WriteLine("That is not a valid number. Try again. ");
+                }
+                
+            }
+
+			// Get movie classification
+			string[] classifications = { "General (G)", "Parental Guidance (PG)", "Mature (M15+)", "Mature Accompanied (MA15+)" };
+            WriteLine("Select movie classification: ");
+            for (int i = 0; i < classifications.Length; i++)
+            {
+                WriteLine($"{i + 1}. {classifications[i]}");
+            }
+
+
+            int classificationChoice;
+            bool isValidClassification = false;
+            while (!isValidClassification)
+            {
+                WriteLine();
+                WriteLine("Enter your choice: ");
+                string? input = ReadLine();
+
+                if (input == "0")
+                {
+                    WriteLine();
+                    StaffMenu.DisplayStaffMenu();
+                    break;
+                }
+                else if (int.TryParse(input, out classificationChoice) && classificationChoice >= 1 && classificationChoice <= classifications.Length)
+                {
+                    classification = classifications[classificationChoice - 1];
+                    WriteLine();
+                    isValidClassification = true;
+                }
+                else
+                {
+                    WriteLine("That is not a valid number. Try again. ");
+                }
+
+            }
+
+            // Get movie duration
+            duration = CheckIntInput("Enter duration of the movie (in minutes): ");
+            WriteLine();
+
+            // Get number of new copies
+            copies = CheckIntInput("Enter number of new copies: ");
+            WriteLine();
+
+            // Add movie to collection
+            Movie newMovie = new Movie(title, genre, classification, duration, copies);
+            MovieCollection.Movies.Insert(newMovie);
+            
+        }
+
+        public static void RemoveDVD()
 		{
+            string title = "";
+            int copies;
 
-		}
+            Clear();
+            WriteLine("==================== Remove DVD ======================");
+            WriteLine();
+            WriteLine("Enter DVD information below: | (0 to Exit)");
+            WriteLine("------------------------------------------------------");
 
-		public void RegisterMember()
+            // Get movie title
+            title = CheckTitleInput("Enter movie title: ");
+            WriteLine();
+            copies = CheckIntInput("Enter number of copies to delete: ");
+
+            // Remove movie from collection
+            MovieCollection.Movies.Delete(title, copies);
+        }
+
+        public static void RegisterMember()
 		{
+            string firstName;
+            string lastName;
+            int phoneNumber;
+            int password = 0;
 
-		}
+            WriteLine();
+            WriteLine("================== Register New Member =====================");
+            WriteLine();
+            WriteLine("Enter member's personal information below: | (0 to Exit)");
+            WriteLine("------------------------------------------------------------");
+
+            // Get basic info
+            firstName = CheckStringInput("Enter first name: ");
+            lastName = CheckStringInput("Enter last name: ");
+            phoneNumber = CheckIntInput("Enter phone number: ");
+
+            // Get password
+            int pwd;
+            bool isValidPwd = false;
+            while(!isValidPwd)
+            {
+                Write("Enter password: ");
+                string? input = ReadLine();
+
+                if (input == "0")
+                {
+                    WriteLine();
+                    StaffMenu.DisplayStaffMenu();
+                    break;
+
+                }
+                else if (input?.Length == 4)
+                {
+                    if (int.TryParse(input, out pwd))
+                    {
+                        password = pwd;
+                        isValidPwd = true;
+                    }
+                }
+                else
+                {
+                    WriteLine("Invalid input. Please try again with four-digit password.");
+                }
+               
+            }
+
+            // Add new member to collection
+            Member newMember = new Member(firstName, lastName, phoneNumber, password);
+            MemberCollection.Members.Insert(newMember);
+        }
 
 		public void RemoveMember()
 		{
 
 		}
 
-		public void FindMemberPhoneNumber()
+		public static void FindMemberPhoneNumber()
 		{
+            string firstName;
+            string lastName;
+            int phoneNumber;
 
-		}
+            // Get full name
+            WriteLine();
+            firstName = CheckStringInput("Enter first name: ");
+            lastName = CheckStringInput("Enter last name: ");
+
+            phoneNumber = MemberCollection.Members.FindPhoneNumber(firstName, lastName);
+
+            if (phoneNumber != -1)
+            {
+                WriteLine($"The phone number for {firstName} {lastName} is {phoneNumber}");
+                WriteLine();
+            }
+            else
+            {
+                WriteLine("Phone number not found.");
+                WriteLine();
+            }
+        }
 
 		public void FindRentingMembers()
 		{
 
 		}
-	}
+
+        public static void PrintForDebug()
+        {
+            MovieCollection.Movies.Print();
+        }
+
+
+        // Checks if movie input is null
+        public static string CheckTitleInput(string question)
+		{
+			Write(question);
+			string? input = ReadLine();
+
+			while (true)
+			{
+                if (input == "0")
+                {
+					Clear();
+					StaffMenu.DisplayStaffMenu();
+                }
+
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    WriteLine("Invalid input. Please try again.");
+                    WriteLine();
+                    WriteLine(question);
+                    input = ReadLine();
+                }
+                else
+                {
+                    return input;
+                }
+            }
+		}
+
+        // Checks if string input is valid
+        public static string CheckStringInput(string question)
+        {
+            Write(question);
+            string? input = ReadLine();
+
+            while (true)
+            {
+                if (input == "0")
+                {
+                    Clear();
+                    StaffMenu.DisplayStaffMenu();
+                }
+
+                if (string.IsNullOrWhiteSpace(input) || !IsAlphabetsOnly(input))
+                {
+                    WriteLine("Invalid input. Please try again.");
+                    WriteLine();
+                    WriteLine(question);
+                    input = ReadLine();
+                }
+                else
+                {
+                    return input;
+                }
+            }
+        }
+
+        public static bool IsAlphabetsOnly(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!char.IsLetter(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Checks if integer input is valid
+        public static int CheckIntInput(string question)
+        {
+            Write(question);
+            int num;
+            while (!int.TryParse(ReadLine(), out num) || num == 0)
+            {
+                if (num == 0)
+                {
+                    Clear();
+                    StaffMenu.DisplayStaffMenu();
+                    break;
+                }
+                else
+                {
+                    WriteLine("Invalid input. Please enter a valid integer.");
+                    WriteLine();
+                    WriteLine(question);
+                }
+            }
+            return num;
+        }
+    }
 }
 

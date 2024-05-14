@@ -7,37 +7,6 @@ namespace MovieLibrary
 	{
 		public static void DisplayStaffMenu()
 		{
-            StaffMember staff = new StaffMember("staff", "today123");
-            bool isAuthenticated = false;
-
-            while(!isAuthenticated)
-            {
-                WriteLine("Enter staff username: ");
-                string? username = ReadLine();
-
-                WriteLine("Enter staff password: ");
-                string? password = ReadLine();
-
-                if (username != null && password != null && staff.Authenticate(username, password))
-                {
-                    isAuthenticated = true;
-                    WriteLine("Login success.");
-                    Console.Clear();
-                }
-                else
-                {
-                    WriteLine("Incorrect username or password. Please try again.");
-                    WriteLine();
-                }
-
-            }
-
-            DisplayMenuOptions();
-
-        }
-
-        private static void DisplayMenuOptions()
-        {
             bool DisplayMainOptions = true;
 
             while (DisplayMainOptions)
@@ -51,21 +20,19 @@ namespace MovieLibrary
                 WriteLine("4. Remove a registered member from system");
                 WriteLine("5. Find a member's contact phone number, given the member's name");
                 WriteLine("6. Find members who are currently renting a particular movie");
+                WriteLine("7. PRINT TO DEBUG - TO BE DELETED AFTERWARDS");
                 WriteLine("0. Return to main menu");
                 WriteLine();
-                WriteLine("Enter your choice ==> ");
+                Write("Enter your choice: ");
 
                 string? input = ReadLine();
-                if (!int.TryParse(input, out int choice) || choice < 0 || choice > 6)
+                // CHANGE BACK TO 6 AFTER REMOVING DEBUG OPTION
+                if (!int.TryParse(input, out int choice) || choice < 0 || choice > 7)
                 {
                     WriteLine("That is not a valid number. Try again. ");
                     WriteLine();
                     continue;
 
-                }
-                else
-                {
-                    DisplayMainOptions = false;
                 }
 
                 switch (choice)
@@ -75,29 +42,36 @@ namespace MovieLibrary
                         MainMenu.DisplayMenu();
                         break;
                     case 1:
-                        // Add DVDs logic
+                        StaffMember.AddDVD();
+                        WriteLine();
                         break;
                     case 2:
-                        // Remove DVDs logic
+                        StaffMember.RemoveDVD();
+                        WriteLine();
                         break;
                     case 3:
-                        // Register new member logic
+                        StaffMember.RegisterMember();
+                        WriteLine();
                         break;
                     case 4:
                         // Remove member logic
                         break;
                     case 5:
-                        // Find member's phone number logic
+                        StaffMember.FindMemberPhoneNumber();
+                        WriteLine();
                         break;
                     case 6:
                         // Find members renting a particular movie logic
+                        break;
+                    case 7:
+                        StaffMember.PrintForDebug();
                         break;
                     default:
                         WriteLine("That is not a valid number. Try again. ");
                         break;
                 }
             }
-            
+
         }
     }
 }

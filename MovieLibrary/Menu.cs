@@ -11,7 +11,6 @@ namespace MovieLibrary
 
             while (DisplayMainMenu)
             {
-
                 WriteLine("======================================================");
                 WriteLine("COMMUNITY LIBRARY MOVIE DVD MANAGEMENT SYSTEM");
                 WriteLine("======================================================");
@@ -24,7 +23,7 @@ namespace MovieLibrary
                 WriteLine("2. Member");
                 WriteLine("0. End the program");
                 WriteLine();
-                WriteLine("Enter your choice ==> ");
+                Write("Enter your choice: ");
 
                 string? input = ReadLine();
                 if (!int.TryParse(input, out int choice) || choice < 0 || choice > 2)
@@ -41,12 +40,13 @@ namespace MovieLibrary
                 switch(choice)
                 {
                     case 1:
-                        Console.Clear();
-                        StaffMenu.DisplayStaffMenu();
+                        Clear();
+                        StaffLogin.DisplayStaffLogin();
                         break;
 
                     case 2:
-                        //MemberMenu.DisplayMemberMenu();
+                        Clear();
+                        MemberLogin.DisplayMemberLogin();
                         break;
 
                      case 0:
