@@ -257,8 +257,7 @@ namespace MovieLibrary
             }
         }
 
-        // NEED TO TEST
-		public void FindRentingMembers()
+		public static void FindRentingMembers()
 		{
             string title;
 
@@ -266,10 +265,22 @@ namespace MovieLibrary
             WriteLine();
             WriteLine("Search for renting members | (0 to Exit)");
             WriteLine("------------------------------------------------------");
+            WriteLine();
 
             // Get movie title
             title = CheckTitleInput("Enter movie title: ");
             WriteLine();
+
+            Movie? searchedMovie = MovieCollection.Movies.SearchByTitle(title);
+            if (searchedMovie == null)
+            {
+                WriteLine("This movie doesn't exist in the system.");
+                WriteLine();
+            }
+            else
+            {
+                searchedMovie.PrintRentingHistory();
+            }
         }
 
         public static void PrintForDebug()

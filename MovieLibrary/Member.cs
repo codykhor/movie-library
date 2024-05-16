@@ -24,6 +24,19 @@ namespace MovieLibrary
            borrowCount = 0;
         }
 
+        public bool CheckPassword(int inputPwd)
+        {
+            if (password == inputPwd)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         public static void DisplayAllMovies()
         {
             WriteLine();
@@ -53,7 +66,7 @@ namespace MovieLibrary
             {
                 Write("Enter movie title: ");
                 string? title = ReadLine();
-
+                
                 if (title == "0")
                 {
                     Clear();
@@ -68,8 +81,20 @@ namespace MovieLibrary
                     continue;
                 }
 
-                MovieCollection.Movies.SearchByTitle(title);
-                WriteLine();
+                Movie? searchedMovie = MovieCollection.Movies.SearchByTitle(title);
+
+                if (searchedMovie == null)
+                {
+                    WriteLine("Oops. Movie doesn't exist in the system.");
+                    WriteLine();
+                }
+                else
+                {
+                    WriteLine($"Title: {searchedMovie.title}, Genre: {searchedMovie.genre}, Classification: {searchedMovie.classification}, " +
+                        $"Duration: {searchedMovie.durationInMin}, Total Copies: {searchedMovie.totalCopies}, {searchedMovie.membersRenting[1]}");
+                    WriteLine();
+                }
+
                 isComplete = true;
             }
 
@@ -79,6 +104,8 @@ namespace MovieLibrary
         // Action repeats until member wants to Exit
         public static void BorrowMovie(Member member)
         {
+            string firstName = member.firstName;
+            string lastName = member.lastName;
 
             WriteLine();
             WriteLine("============= Borrow Movie With Title ================");
@@ -114,10 +141,16 @@ namespace MovieLibrary
                     {
                         if (!SearchHistory(member, title))
                         {
+                            // Update movie's renting history and frequency
+                            Movie? searchedMovie = MovieCollection.Movies.SearchByTitle(title);
+                            searchedMovie.UpdateRentingHistory(firstName, lastName);
+                            searchedMovie.frequency += 1;
+
+                            // Update member's borrow history
                             member.borrowHistory[member.borrowCount] = title;
                             member.borrowCount++;
                             WriteLine("Movie borrowed succesfully. Enjoy!");
-                            PrintBorrowHistory(member);
+                            //PrintBorrowHistory(member);
                             WriteLine();
                         }
                         else
@@ -142,13 +175,25 @@ namespace MovieLibrary
 
         public static void PrintBorrowHistory(Member member)
         {
-            for (int i = 0; i < member.borrowHistory.Length; i++)
+            if (member.borrowHistory[0] == null)
             {
-                WriteLine($"{member.borrowHistory[i]}");
+                WriteLine("There are currently no movies being borrowed.");
             }
-            WriteLine($"Borrow Count: {member.borrowCount}");
+            else
+            {
+                for (int i = 0; i < member.borrowHistory.Length; i++)
+                {
+                    if (member.borrowHistory[i] != null)
+                    {
+                        WriteLine($"{member.borrowHistory[i]}");
+                    }
+                }
+            }
+            
+            //WriteLine($"Borrow Count: {member.borrowCount}");
         }
 
+        // Checks if movie exists in member's borrow history to prevent renting multiple copies of the same movie
         public static bool SearchHistory(Member member, string title)
         {
 

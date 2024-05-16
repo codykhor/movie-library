@@ -118,14 +118,12 @@ namespace MovieLibrary
             return -1;
         }
 
-        public Member? Authenticate(string firstName, string lastName, int password)
+        public Member Authenticate(string firstName, string lastName, int password)
         {
-            for (int i = 0; i < count; i++)
+            int index = Search(firstName, lastName);
+            if (index != -1 && memberArray[index].CheckPassword(password) == true)
             {
-                if (Search(firstName, lastName) != -1)
-                {
-                    return memberArray[i];
-                }
+                return memberArray[index];
             }
             return null;
         }

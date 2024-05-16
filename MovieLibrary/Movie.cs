@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Console;
 
 namespace MovieLibrary
 {
@@ -24,6 +25,42 @@ namespace MovieLibrary
             membersRenting = new string[total];
             frequency = 0;
 		}
-	}
+
+		public void UpdateRentingHistory(string firstName, string lastName)
+		{
+			string fullName = $"{firstName} {lastName}";
+
+            for (int i = 0; i < membersRenting.Length; i++)
+			{
+				if (membersRenting[i] == null)
+				{
+					membersRenting[i] = fullName;
+                    return;
+				}
+			}
+		}
+
+		public void PrintRentingHistory()
+		{
+            if (membersRenting[0] == null)
+			{
+                WriteLine("No members are renting this movie currently.");
+				WriteLine();
+            }
+			else
+			{
+				WriteLine("Members who are currently renting this movie:");
+                for (int i = 0; i < membersRenting.Length; i++)
+                {
+                    WriteLine($"{membersRenting[i]}");
+                }
+            }
+		}
+
+		public void Print()
+        {
+			WriteLine($"Movie frequency: {frequency}");
+        }
+    }
 }
 

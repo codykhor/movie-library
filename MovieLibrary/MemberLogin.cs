@@ -107,7 +107,7 @@ namespace MovieLibrary
                 {
                     WriteLine("Invalid input. Please try again.");
                     WriteLine();
-                    WriteLine(question);
+                    Write(question);
                     input = ReadLine();
                 }
                 else

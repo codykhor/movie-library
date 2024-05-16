@@ -56,7 +56,8 @@ namespace MovieLibrary
                         // logic
                         break;
                     case 5:
-                        // logic
+                        Member.PrintBorrowHistory(member);
+                        WriteLine();
                         break;
                     case 6:
                         // logic

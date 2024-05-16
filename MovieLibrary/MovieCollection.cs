@@ -15,7 +15,7 @@ namespace MovieLibrary
 		private const string deleted = "deleted"; // a bucket where a key-and-value pair was deleted
 
 		// singleton
-		public static MovieCollection? Movies
+		public static MovieCollection Movies
 		{
 			get { return movies; }
 		}
@@ -182,19 +182,17 @@ namespace MovieLibrary
 
 		}
 
-		public void SearchByTitle(string title)
+		public Movie? SearchByTitle(string title)
 		{
             int search = Search(title);
 
             if (search == -1)
 			{
-				WriteLine("Oops. Movie doesn't exist in the system.");
+				return null;
 			}
 			else
 			{
-                WriteLine("Title: " + table[search].Value.title + ", Genre: " +
-					table[search].Value.genre + ", Classification: " + table[search].Value.classification +
-					", Duration: " + table[search].Value.durationInMin + ", Total Copies: " + table[search].Value.totalCopies);
+				return table[search].Value;
             }
         }
 

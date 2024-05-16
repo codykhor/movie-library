@@ -61,7 +61,7 @@ namespace MovieLibrary
                         WriteLine();
                         break;
                     case 6:
-                        // Find members renting a particular movie logic
+                        StaffMember.FindRentingMembers();
                         break;
                     case 7:
                         StaffMember.PrintForDebug();
