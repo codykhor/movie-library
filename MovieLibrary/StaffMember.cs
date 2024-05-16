@@ -195,10 +195,40 @@ namespace MovieLibrary
             MemberCollection.Members.Insert(newMember);
         }
 
-		public void RemoveMember()
+		public static void RemoveMember()
 		{
+            string firstName;
+            string lastName;
+            int borrowCount;
 
-		}
+            WriteLine();
+            WriteLine("==================== Remove Existing Member ===================");
+            WriteLine();
+            WriteLine("Enter member's personal information below: | (0 to Exit)");
+            WriteLine("---------------------------------------------------------------");
+
+            // Get full name
+            firstName = CheckStringInput("Enter first name: ");
+            lastName = CheckStringInput("Enter last name: ");
+
+            // Check if member is still holding DVDs
+            borrowCount = MemberCollection.Members.Remove(firstName, lastName);
+            if (borrowCount > 0)
+            {
+                WriteLine();
+                WriteLine($"Member is still holding {borrowCount} DVDs, can't be removed from the system. ");
+            }
+            else if (borrowCount == 0)
+            {
+                WriteLine();
+                WriteLine("Member removed successfully.");
+            }
+            else
+            {
+                WriteLine();
+                WriteLine("Member doesn't exist.");
+            }
+        }
 
 		public static void FindMemberPhoneNumber()
 		{
@@ -215,24 +245,36 @@ namespace MovieLibrary
 
             if (phoneNumber != -1)
             {
+                WriteLine();
                 WriteLine($"The phone number for {firstName} {lastName} is {phoneNumber}");
                 WriteLine();
             }
             else
             {
+                WriteLine();
                 WriteLine("Phone number not found.");
                 WriteLine();
             }
         }
 
+        // NEED TO TEST
 		public void FindRentingMembers()
 		{
+            string title;
 
-		}
+            WriteLine("============== Search Renting Members ================");
+            WriteLine();
+            WriteLine("Search for renting members | (0 to Exit)");
+            WriteLine("------------------------------------------------------");
+
+            // Get movie title
+            title = CheckTitleInput("Enter movie title: ");
+            WriteLine();
+        }
 
         public static void PrintForDebug()
         {
-            MovieCollection.Movies.Print();
+            MovieCollection.Movies.PrintAll();
         }
 
 
@@ -254,7 +296,7 @@ namespace MovieLibrary
                 {
                     WriteLine("Invalid input. Please try again.");
                     WriteLine();
-                    WriteLine(question);
+                    Write(question);
                     input = ReadLine();
                 }
                 else
@@ -282,7 +324,7 @@ namespace MovieLibrary
                 {
                     WriteLine("Invalid input. Please try again.");
                     WriteLine();
-                    WriteLine(question);
+                    Write(question);
                     input = ReadLine();
                 }
                 else
@@ -321,7 +363,7 @@ namespace MovieLibrary
                 {
                     WriteLine("Invalid input. Please enter a valid integer.");
                     WriteLine();
-                    WriteLine(question);
+                    Write(question);
                 }
             }
             return num;

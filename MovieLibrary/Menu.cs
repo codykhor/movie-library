@@ -46,7 +46,11 @@ namespace MovieLibrary
 
                     case 2:
                         Clear();
-                        MemberLogin.DisplayMemberLogin();
+                        Member? validMember = MemberLogin.DisplayMemberLogin();
+                        if (validMember != null)
+                        {
+                            MemberMenu.DisplayMemberMenu(validMember);
+                        }
                         break;
 
                      case 0:

@@ -54,7 +54,7 @@ namespace MovieLibrary
                         WriteLine();
                         break;
                     case 4:
-                        // Remove member logic
+                        StaffMember.RemoveMember();
                         break;
                     case 5:
                         StaffMember.FindMemberPhoneNumber();

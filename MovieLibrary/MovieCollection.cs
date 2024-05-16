@@ -15,7 +15,7 @@ namespace MovieLibrary
 		private const string deleted = "deleted"; // a bucket where a key-and-value pair was deleted
 
 		// singleton
-		public static MovieCollection Movies
+		public static MovieCollection? Movies
 		{
 			get { return movies; }
 		}
@@ -151,10 +151,57 @@ namespace MovieLibrary
 
 		}
 
+		/* pre: nil
+		/* post: print elements in dictionary order
+		*/
+		public void PrintSorted()
+		{
+			Movie[] sortedMoviesArray = new Movie[count];
+			int index = 0;
+
+			for (int i = 0; i < buckets; i++)
+			{
+				if (table[i].Key != empty && table[i].Key != deleted)
+				{
+					sortedMoviesArray[index] = table[i].Value;
+					index++;
+				}
+			}
+
+			Array.Sort(sortedMoviesArray, (a, b) => string.Compare(a.title, b.title));
+
+
+
+			for (int i = 0; i < sortedMoviesArray.Length; i++)
+			{
+				WriteLine("Title: " + sortedMoviesArray[i].title + ", Genre: " +
+                       sortedMoviesArray[i].genre + ", Classification: " + sortedMoviesArray[i].classification +
+					   ", Duration: " + sortedMoviesArray[i].durationInMin + ", Total Copies: " + sortedMoviesArray[i].totalCopies);
+			}
+			WriteLine();
+
+		}
+
+		public void SearchByTitle(string title)
+		{
+            int search = Search(title);
+
+            if (search == -1)
+			{
+				WriteLine("Oops. Movie doesn't exist in the system.");
+			}
+			else
+			{
+                WriteLine("Title: " + table[search].Value.title + ", Genre: " +
+					table[search].Value.genre + ", Classification: " + table[search].Value.classification +
+					", Duration: " + table[search].Value.durationInMin + ", Total Copies: " + table[search].Value.totalCopies);
+            }
+        }
+
         /* pre: nil
 		/* post: print all elements in hashtable
 		*/
-        public void Print()
+        public void PrintAll()
         {
             for (int i = 0; i < buckets; i++)
             {
@@ -165,11 +212,10 @@ namespace MovieLibrary
                 else
                     WriteLine("Title: " + table[i].Value.title + ", Genre: " +
                         table[i].Value.genre + ", Classification: " + table[i].Value.classification +
-                        ", Duration: " + table[i].Value.durationInMin + ", Total: " + table[i].Value.totalCopies);
+                        ", Duration: " + table[i].Value.durationInMin + ", Total Copies: " + table[i].Value.totalCopies);
             }
             WriteLine();
         }
-
 
         // Come back and update with a better hash function (might need to change key value to int)
         /* pre: key >= 0
@@ -197,9 +243,10 @@ namespace MovieLibrary
 				new Movie("The Dark Knight", "Action", "PG-13", 152, 9),
 				new Movie("Pulp Fiction", "Crime", "R", 154, 7),
 				new Movie("Forrest Gumpp", "Drama", "PG-13", 142, 6),
-		};
+                new Movie("Mama Mia", "Drama", "PG-13", 150, 3),
+        };
 
-            // Add movies
+            // Add movies -- rewriting to avoid printing feedback messages when initialized
             foreach (Movie movie in mockData)
             {
                 string key = movie.title;

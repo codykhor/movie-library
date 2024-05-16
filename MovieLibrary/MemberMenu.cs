@@ -5,7 +5,7 @@ namespace MovieLibrary
 {
 	public class MemberMenu
 	{
-		public static void DisplayMemberMenu()
+		public static void DisplayMemberMenu(Member member)
 		{
             bool DisplayMainOptions = true;
 
@@ -41,13 +41,16 @@ namespace MovieLibrary
                         MainMenu.DisplayMenu();
                         break;
                     case 1:
-                        // logic
+                        Member.DisplayAllMovies();
+                        WriteLine();
                         break;
                     case 2:
-                        // logic
+                        Member.SearchMovies(member);
+                        WriteLine();
                         break;
                     case 3:
-                        // logic
+                        Member.BorrowMovie(member);
+                        WriteLine();
                         break;
                     case 4:
                         // logic

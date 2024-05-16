@@ -11,6 +11,7 @@ namespace MovieLibrary
 		public int durationInMin { get; set; }
 		public int totalCopies { get; set; }
 		public int frequency { get; set; }
+		public string[] membersRenting { get; set; }
 
 		// Constructor
 		public Movie(string movieTitle, string movieGenre, string movieClass, int duration, int total)
@@ -20,7 +21,8 @@ namespace MovieLibrary
 			classification = movieClass;
 			durationInMin = duration;
             totalCopies = total;
-			frequency = 0;
+            membersRenting = new string[total];
+            frequency = 0;
 		}
 	}
 }

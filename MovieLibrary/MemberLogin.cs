@@ -5,8 +5,9 @@ namespace MovieLibrary
 {
 	public class MemberLogin
 	{
-        public static void DisplayMemberLogin()
+        public static Member? DisplayMemberLogin()
         {
+            Member? validMember = null;
 
             bool isValidInfo = false;
             bool isValidPwd = false;
@@ -27,7 +28,7 @@ namespace MovieLibrary
                 {
                     WriteLine();
                     MainMenu.DisplayMenu();
-                    break;
+                    return null;
                 }
                 WriteLine();
 
@@ -36,7 +37,7 @@ namespace MovieLibrary
                 {
                     WriteLine();
                     MainMenu.DisplayMenu();
-                    break;
+                    return null;
                 }
                 WriteLine();
 
@@ -50,7 +51,7 @@ namespace MovieLibrary
                     {
                         WriteLine();
                         MainMenu.DisplayMenu();
-                        break;
+                        return null;
 
                     }
                     else if (input?.Length == 4)
@@ -70,12 +71,12 @@ namespace MovieLibrary
                 }
 
                 // Authentication process
-                if (MemberCollection.Members.Authenticate(firstName, lastName, password))
+                validMember = MemberCollection.Members.Authenticate(firstName, lastName, password);
+                if (validMember != null)
                 {
                     WriteLine("Member login success.");
                     WriteLine();
-                    MemberMenu.DisplayMemberMenu();
-                    break;
+                    isValidInfo = true;
                 }
                 else
                 {
@@ -85,7 +86,7 @@ namespace MovieLibrary
                 }
 
             }
-            
+            return validMember;
         }
 
         public static string CheckStringInput(string question)
@@ -99,6 +100,7 @@ namespace MovieLibrary
                 {
                     Clear();
                     MainMenu.DisplayMenu();
+                    return null;
                 }
 
                 if (string.IsNullOrWhiteSpace(input) || !IsAlphabetsOnly(input))
