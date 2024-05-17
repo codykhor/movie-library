@@ -53,7 +53,8 @@ namespace MovieLibrary
                         WriteLine();
                         break;
                     case 4:
-                        // logic
+                        Member.ReturnMovie(member);
+                        WriteLine();
                         break;
                     case 5:
                         Member.PrintBorrowHistory(member);

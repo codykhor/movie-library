@@ -261,6 +261,7 @@ namespace MovieLibrary
 		{
             string title;
 
+            WriteLine();
             WriteLine("============== Search Renting Members ================");
             WriteLine();
             WriteLine("Search for renting members | (0 to Exit)");

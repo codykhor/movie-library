@@ -26,7 +26,7 @@ namespace MovieLibrary
             frequency = 0;
 		}
 
-		public void UpdateRentingHistory(string firstName, string lastName)
+		public void AddToRentingHistory(string firstName, string lastName)
 		{
 			string fullName = $"{firstName} {lastName}";
 
@@ -40,7 +40,27 @@ namespace MovieLibrary
 			}
 		}
 
-		public void PrintRentingHistory()
+		public void RemoveFromRentingHistory(string firstName, string lastName)
+		{
+            string fullName = $"{firstName} {lastName}";
+
+            for (int i = 0; i < membersRenting.Length; i++)
+            {
+                if (membersRenting[i] != null && membersRenting[i].Equals(fullName, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Shift names to the left
+                    for (int j = i; j < membersRenting.Length - 1; j++)
+                    {
+                        membersRenting[j] = membersRenting[j + 1];
+                    }
+                    
+                    membersRenting[membersRenting.Length - 1] = null;
+                    return;
+                }
+            }
+        }
+
+        public void PrintRentingHistory()
 		{
             if (membersRenting[0] == null)
 			{
@@ -52,8 +72,16 @@ namespace MovieLibrary
 				WriteLine("Members who are currently renting this movie:");
                 for (int i = 0; i < membersRenting.Length; i++)
                 {
-                    WriteLine($"{membersRenting[i]}");
+					if (membersRenting[i] == null)
+					{
+						break;
+					}
+					else
+					{
+                        WriteLine($"{membersRenting[i]}");
+                    }
                 }
+                WriteLine();
             }
 		}
 
