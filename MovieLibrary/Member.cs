@@ -69,7 +69,6 @@ namespace MovieLibrary
                 
                 if (title == "0")
                 {
-                    Clear();
                     MemberMenu.DisplayMemberMenu(member);
                     break;
                 }
@@ -130,7 +129,6 @@ namespace MovieLibrary
 
                 if (title == "0")
                 {
-                    Clear();
                     MemberMenu.DisplayMemberMenu(member);
                     break;
                 }
@@ -200,7 +198,6 @@ namespace MovieLibrary
 
                 if (title == "0")
                 {
-                    Clear();
                     MemberMenu.DisplayMemberMenu(member);
                     break;
                 }

@@ -27,7 +27,6 @@ namespace MovieLibrary
             int duration;
             int copies;
 
-            Clear();
             WriteLine("===================== Add DVD ========================");
             WriteLine();
             WriteLine("Enter DVD information below: | (0 to Exit)");
@@ -127,7 +126,6 @@ namespace MovieLibrary
             string title = "";
             int copies;
 
-            Clear();
             WriteLine("==================== Remove DVD ======================");
             WriteLine();
             WriteLine("Enter DVD information below: | (0 to Exit)");
@@ -300,7 +298,6 @@ namespace MovieLibrary
 			{
                 if (input == "0")
                 {
-					Clear();
 					StaffMenu.DisplayStaffMenu();
                 }
 
@@ -328,7 +325,6 @@ namespace MovieLibrary
             {
                 if (input == "0")
                 {
-                    Clear();
                     StaffMenu.DisplayStaffMenu();
                 }
 
@@ -367,7 +363,6 @@ namespace MovieLibrary
             {
                 if (num == 0)
                 {
-                    Clear();
                     StaffMenu.DisplayStaffMenu();
                     break;
                 }

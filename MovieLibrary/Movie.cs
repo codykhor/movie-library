@@ -48,7 +48,7 @@ namespace MovieLibrary
             string[] updatedRentingHistory = new string[membersRenting.Length - 1];
             int newIndex = 0;
 
-            // Copy from the original array except the member to remove
+            // Copy from original array except the member to remove
             for (int i = 0; i < membersRenting.Length; i++)
             {
                 if (membersRenting[i] != null && !membersRenting[i].Equals(fullName, StringComparison.OrdinalIgnoreCase))
@@ -58,7 +58,6 @@ namespace MovieLibrary
                 }
             }
 
-            // Update membersRenting to the new array
             membersRenting = updatedRentingHistory;
         }
 

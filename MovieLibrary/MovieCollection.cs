@@ -219,10 +219,25 @@ namespace MovieLibrary
         /* pre: key >= 0
 		/* post: return the bucket (location) for the given key
 		*/
-        private int Hashing(string key) 
+		// Using middle square method
+		private int Hashing(string key)
 		{
-			int keyLength = key.Length;
-			return (keyLength % buckets);
+			long num = 0;
+
+			foreach (char c in key.ToLower())
+			{
+				num += (int)c;
+			}
+
+			num = num * num; // key is squared
+
+			string numString = num.ToString();
+			
+			int middleIndex = (numString.Length / 2) - 1;
+            string middleBits = numString.Substring(middleIndex, 3);
+			int index = int.Parse(middleBits) % buckets;
+
+            return index;
 		}
 
 		// linear probing - come back and update probing method
@@ -236,12 +251,26 @@ namespace MovieLibrary
         {
             Movie[] mockData = new Movie[]
             {
-				new Movie("The Shawshank Redemption", "Drama", "R", 142, 10),
-				new Movie("The Godfather", "Crime", "R", 175, 8),
-				new Movie("The Dark Knight", "Action", "PG-13", 152, 9),
-				new Movie("Pulp Fiction", "Crime", "R", 154, 7),
-				new Movie("Forrest Gumpp", "Drama", "PG-13", 142, 6),
-                new Movie("Mama Mia", "Drama", "PG-13", 150, 3),
+                new Movie("Inception", "Sci-Fi", "PG-13", 148, 9),
+				new Movie("The Matrix", "Sci-Fi", "R", 136, 8),
+				new Movie("Mulan", "Thriller", "R", 118, 8),
+				new Movie("Jurassic Park", "Action", "PG-13", 127, 7),
+				new Movie("The Avengers", "Action", "PG-13", 143, 8),
+				new Movie("Titanic", "Romance", "PG-13", 195, 7),
+				new Movie("Mamma Mia", "Fantasy", "PG", 152, 9),
+				new Movie("The Lion King", "Animation", "G", 88, 9),
+				new Movie("Interstellar", "Sci-Fi", "PG-13", 169, 9),
+				new Movie("Forrest Gump", "Drama", "PG-13", 142, 9), 
+				new Movie("The Intern", "Crime", "R", 202, 9),
+				new Movie("Ocean 8", "Biography", "R", 195, 9),
+				new Movie("Goodfellas", "Crime", "R", 146, 8),
+				new Movie("Lilo and Stitch", "Drama", "R", 189, 9),
+				new Movie("Fight Club", "Drama", "R", 139, 8),
+				new Movie("Avatar", "Sci-Fi", "PG-13", 162, 8),
+				new Movie("Gladiator", "Action", "R", 155, 8),
+				new Movie("Braveheart", "Biography", "R", 178, 9),
+				new Movie("The Departed", "Crime", "R", 151, 9),
+				new Movie("Saving Private Ryan", "War", "R", 169, 9)
         };
 
             // Add movies -- rewriting to avoid printing feedback messages when initialized

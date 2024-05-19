@@ -18,6 +18,7 @@ namespace MovieLibrary
             
             while (!isValidInfo)
             {
+                WriteLine();
                 WriteLine("Member Login | (0 to exit)");
                 WriteLine("------------------------------------------------------");
                 WriteLine();
@@ -98,7 +99,6 @@ namespace MovieLibrary
             {
                 if (input == "0")
                 {
-                    Clear();
                     MainMenu.DisplayMenu();
                     return null;
                 }

@@ -40,12 +40,10 @@ namespace MovieLibrary
                 switch(choice)
                 {
                     case 1:
-                        Clear();
                         StaffLogin.DisplayStaffLogin();
                         break;
 
                     case 2:
-                        Clear();
                         Member? validMember = MemberLogin.DisplayMemberLogin();
                         if (validMember != null)
                         {

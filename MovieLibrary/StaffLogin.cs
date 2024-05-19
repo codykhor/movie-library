@@ -12,6 +12,7 @@ namespace MovieLibrary
 
             while (!isAuthenticated)
             {
+                WriteLine();
                 WriteLine("Staff Login | (0 to exit)");
                 WriteLine("------------------------------------------------------");
                 WriteLine();
