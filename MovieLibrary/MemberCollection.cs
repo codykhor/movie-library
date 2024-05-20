@@ -36,8 +36,7 @@ namespace MovieLibrary
             memberArray = new Member[num];
         }
 
-        // Use Staffmember to Writeline?
-        public void Insert(Member member)
+        public int Insert(Member member)
         {
             string firstName = member.firstName;
             string lastName = member.lastName;
@@ -48,18 +47,17 @@ namespace MovieLibrary
                 {
                     memberArray[count] = member;
                     count++;
-                    WriteLine();
-                    WriteLine("Member registered successfully!");
+                    return 1;
+                    
                 }
                 else
                 {
-                    WriteLine();
-                    WriteLine("Registration failed, member already exists.");
+                    return 2;
                 }
             }
             else
             {
-                WriteLine("Member collection is full.");
+                return -1;     
             }
         }
 

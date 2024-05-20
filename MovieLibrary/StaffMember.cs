@@ -117,8 +117,21 @@ namespace MovieLibrary
 
             // Add movie to collection
             Movie newMovie = new Movie(title, genre, classification, duration, copies);
-            MovieCollection.Movies.Insert(newMovie);
-            
+
+            if (MovieCollection.Movies.Insert(newMovie) == 1)
+            {
+                WriteLine("Movie added successfully.");
+
+            }
+            else if (MovieCollection.Movies.Insert(newMovie) == 2 )
+            {
+                WriteLine("Movie exists and the number of copies is updated.");
+            }
+            else
+            {
+                WriteLine("The system is full.");
+            }
+
         }
 
         public static void RemoveDVD()
@@ -137,7 +150,23 @@ namespace MovieLibrary
             copies = CheckIntInput("Enter number of copies to delete: ");
 
             // Remove movie from collection
-            MovieCollection.Movies.Delete(title, copies);
+            if (MovieCollection.Movies.Delete(title, copies) == 1)
+            {
+                WriteLine("Movie has been removed from system.");
+            }
+            else if (MovieCollection.Movies.Delete(title, copies) == 2)
+            {
+                WriteLine("The current number of copies available is updated.");
+            }
+            else if (MovieCollection.Movies.Delete(title, copies) == 3)
+            {
+                WriteLine("The requested number of copies to delete exceeds the current number of copies available in the library.");
+            }
+            else
+            {
+                WriteLine("Oops. Movie doesn't exist in the system.");
+            }
+                //MovieCollection.Movies.Delete(title, copies);
         }
 
         public static void RegisterMember()
@@ -190,7 +219,21 @@ namespace MovieLibrary
 
             // Add new member to collection
             Member newMember = new Member(firstName, lastName, phoneNumber, password);
-            MemberCollection.Members.Insert(newMember);
+            if (MemberCollection.Members.Insert(newMember) == 1)
+            {
+                WriteLine();
+                WriteLine("Member registered successfully!");
+            }
+            else if (MemberCollection.Members.Insert(newMember) == 2)
+            {
+                WriteLine();
+                WriteLine("Registration failed, member already exists.");
+            }
+            else
+            {
+                WriteLine("Member collection is full.");
+            }
+
         }
 
 		public static void RemoveMember()

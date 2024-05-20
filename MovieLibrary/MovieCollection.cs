@@ -64,35 +64,36 @@ namespace MovieLibrary
 				(table[(bucket + offset) % buckets].Key != empty) &&
 				(table[(bucket + offset) % buckets].Key != deleted))
 			{
-				offset = Probing(offset);
-				i++;
+                i++;
+                offset = Probing(key, i);
+				
 			}
 			return (offset + bucket) % buckets;
 		}
 
-		public void Insert(Movie movie)
+		public int Insert(Movie movie)
 		{
 			string key = movie.title;
 			int search = Search(key);
 
-            // check pre-condition
-            if (Count < table.Length)
+			// check pre-condition
+			if (Count < table.Length)
 			{
 				if (search == -1)
 				{
 					int bucket = FindInsertionBucket(key);
 					table[bucket] = new KeyValuePair<string, Movie>(key, movie);
 					count++;
-					WriteLine("Movie added successfully.");
+					return 1;
 				}
 				else
 				{
-                    table[search].Value.totalCopies += movie.totalCopies;
-                    WriteLine("Movie exists and the number of copies is updated.");
-                }
+					table[search].Value.totalCopies += movie.totalCopies;
+					return 2;
+				}
 			}
 			else
-				WriteLine("The system is full.");
+				return -1;
 		}
 
         /* pre:  true
@@ -111,7 +112,8 @@ namespace MovieLibrary
 				(table[(bucket + offset) % buckets].Key != key) &&
 				(table[(bucket + offset) % buckets].Key != empty))
 			{
-                offset = Probing(offset);
+                i++;
+                offset = Probing(key, i);
 
             }
 			if (table[(bucket + offset) % buckets].Key == key)
@@ -124,7 +126,7 @@ namespace MovieLibrary
         /* pre:  nil
 		* post: the given key has been removed from the hashtable if the given key is in the hashtable
 		*/
-        public void Delete(string key, int copies)
+        public int Delete(string key, int copies)
 		{
 			int bucket = Search(key);
 
@@ -133,28 +135,27 @@ namespace MovieLibrary
 				if (copies == table[bucket].Value.totalCopies)
 				{
 					table[bucket] = new KeyValuePair<string, Movie>(deleted, null);
-                    count--;
-                    WriteLine("Movie has been removed from system.");
-                }
+					count--;
+					return 1;
+				}
 				else if (copies < table[bucket].Value.totalCopies)
 				{
-                    table[bucket].Value.totalCopies -= copies;
-                    WriteLine("The current number of copies available is updated.");
-                }
+					table[bucket].Value.totalCopies -= copies;
+					return 2;
+				}
 				else
 				{
-                    WriteLine("The requested number of copies to delete exceeds the current number of copies available in the library.");
-                }
-            }
+					return 3;
+				}
+			}
 			else
-				WriteLine("Oops. Movie doesn't exist in the system.");
-
+				return -1;
 		}
 
 		/* pre: nil
 		/* post: print elements in dictionary order
 		*/
-		public void PrintSorted()
+		public Movie[] PrintSorted()
 		{
 			Movie[] sortedMoviesArray = new Movie[count];
 			int index = 0;
@@ -170,15 +171,7 @@ namespace MovieLibrary
 
 			Array.Sort(sortedMoviesArray, (a, b) => string.Compare(a.title, b.title));
 
-
-
-			for (int i = 0; i < sortedMoviesArray.Length; i++)
-			{
-				WriteLine("Title: " + sortedMoviesArray[i].title + ", Genre: " +
-                       sortedMoviesArray[i].genre + ", Classification: " + sortedMoviesArray[i].classification +
-					   ", Duration: " + sortedMoviesArray[i].durationInMin + ", Total Copies: " + sortedMoviesArray[i].totalCopies);
-			}
-			WriteLine();
+			return sortedMoviesArray;
 
 		}
 
@@ -215,7 +208,6 @@ namespace MovieLibrary
             WriteLine();
         }
 
-        // Come back and update with a better hash function (might need to change key value to int)
         /* pre: key >= 0
 		/* post: return the bucket (location) for the given key
 		*/
@@ -240,10 +232,24 @@ namespace MovieLibrary
             return index;
 		}
 
-		// linear probing - come back and update probing method
-		private int Probing(int offset)
+		private int SecondaryHash(string key)
 		{
-			return offset + 1;
+			long num = 0;
+
+			foreach (char c in key.ToLower())
+			{
+				num = (num * 31) + (int)c;
+			}
+
+			long step = 991 - (num % 991);
+
+			return (int)step;
+		}
+
+		// double probing
+		private int Probing(string key, int i)
+		{
+			return i * SecondaryHash(key);
 		}
 
         // Mock Data to populate collection

@@ -46,7 +46,15 @@ namespace MovieLibrary
             WriteLine("------------------------------------------------------");
             WriteLine();
 
-            MovieCollection.Movies.PrintSorted();
+            Movie[] sortedMoviesArray = MovieCollection.Movies.PrintSorted();
+
+            for (int i = 0; i < sortedMoviesArray.Length; i++)
+            {
+                WriteLine("Title: " + sortedMoviesArray[i].title + ", Genre: " +
+                                sortedMoviesArray[i].genre + ", Classification: " + sortedMoviesArray[i].classification +
+                       ", Duration: " + sortedMoviesArray[i].durationInMin + ", Total Copies: " + sortedMoviesArray[i].totalCopies);
+            }
+            WriteLine();
         }
 
         public static void SearchMovies(Member member)
@@ -220,9 +228,12 @@ namespace MovieLibrary
                         // Update member's borrow history
                         for (int i = 0; i < member.borrowHistory.Length; i++)
                         {
-                            for (int j = i; j < member.borrowHistory.Length - 1; j++)
+                            if (member.borrowHistory[i] == title)
                             {
-                                member.borrowHistory[j] = member.borrowHistory[j + 1];
+                                for (int j = i; j < member.borrowHistory.Length - 1; j++)
+                                {
+                                    member.borrowHistory[j] = member.borrowHistory[j + 1];
+                                }
                             }
 
                             member.borrowHistory[member.borrowHistory.Length - 1] = null;
