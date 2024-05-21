@@ -88,6 +88,8 @@ namespace MovieLibrary
                     continue;
                 }
 
+                title = FirstCharToUpper(title);
+
                 Movie? searchedMovie = MovieCollection.Movies.SearchByTitle(title);
 
                 if (searchedMovie == null)
@@ -147,6 +149,8 @@ namespace MovieLibrary
                     WriteLine();
                     continue;
                 }
+
+                title = FirstCharToUpper(title);
 
                 if (MovieCollection.Movies.Search(title) != -1)
                 {
@@ -216,6 +220,8 @@ namespace MovieLibrary
                     WriteLine();
                     continue;
                 }
+
+                title = FirstCharToUpper(title);
 
                 if (MovieCollection.Movies.Search(title) != -1)
                 {
@@ -301,6 +307,22 @@ namespace MovieLibrary
                 }
             }
             return true;
+        }
+
+        public static string FirstCharToUpper(string input)
+        {
+            string[] words = input.Split(' ');
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(words[i]))
+                {
+                    char[] letters = words[i].ToCharArray();
+                    letters[0] = char.ToUpper(letters[0]);
+                    words[i] = new string(letters);
+                }
+            }
+            return string.Join(' ', words);
         }
     }
 }

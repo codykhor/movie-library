@@ -196,16 +196,17 @@ namespace MovieLibrary
         {
             for (int i = 0; i < buckets; i++)
             {
-                if (table[i].Key == "empty")
-                    WriteLine("--");
-                else if (table[i].Key == "deleted")
-                    WriteLine("--del--");
-                else
-                    WriteLine("Title: " + table[i].Value.title + ", Genre: " +
-                        table[i].Value.genre + ", Classification: " + table[i].Value.classification +
-                        ", Duration: " + table[i].Value.durationInMin + ", Total Copies: " + table[i].Value.totalCopies);
+				if (table[i].Key == "empty")
+					WriteLine("--");
+				else if (table[i].Key == "deleted")
+					WriteLine("--del--");
+				else
+					WriteLine("Title: " + table[i].Value.title + ", Genre: " +
+						table[i].Value.genre + ", Classification: " + table[i].Value.classification +
+						", Duration: " + table[i].Value.durationInMin + ", Total Copies: " + table[i].Value.totalCopies + "freq: " + table[i].Value.frequency);
             }
             WriteLine();
+			
         }
 
         /* pre: key >= 0

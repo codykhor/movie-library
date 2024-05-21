@@ -34,7 +34,8 @@ namespace MovieLibrary
 
 			// Get movie title
 			title = CheckTitleInput("Enter movie title: ");
-			WriteLine();
+            title = FirstCharToUpper(title);
+            WriteLine();
 
 			// Get movie genre
 			string[] genres = { "Drama", "Adventure", "Family", "Action", "Sci-fi", "Comedy", "Animated", "Thriller", "Other" };
@@ -146,6 +147,7 @@ namespace MovieLibrary
 
             // Get movie title
             title = CheckTitleInput("Enter movie title: ");
+            title = FirstCharToUpper(title);
             WriteLine();
             copies = CheckIntInput("Enter number of copies to delete: ");
 
@@ -311,9 +313,11 @@ namespace MovieLibrary
 
             // Get movie title
             title = CheckTitleInput("Enter movie title: ");
+            title = FirstCharToUpper(title);
             WriteLine();
 
             Movie? searchedMovie = MovieCollection.Movies.SearchByTitle(title);
+
             if (searchedMovie == null)
             {
                 WriteLine("This movie doesn't exist in the system.");
@@ -395,6 +399,22 @@ namespace MovieLibrary
                 }
             }
             return true;
+        }
+
+        public static string FirstCharToUpper(string input)
+        {
+            string[] words = input.Split(' ');
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(words[i]))
+                {
+                    char[] letters = words[i].ToCharArray();
+                    letters[0] = char.ToUpper(letters[0]);
+                    words[i] = new string(letters);
+                }
+            }
+            return string.Join(' ', words);
         }
 
         // Checks if integer input is valid
