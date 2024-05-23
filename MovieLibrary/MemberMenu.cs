@@ -61,10 +61,11 @@ namespace MovieLibrary
                         WriteLine();
                         break;
                     case 6:
-                        // logic
+                        Member.DisplayTop3Movies();
+                        WriteLine();
                         break;
                     case 7:
-                        // logic
+                        StaffMember.PrintForDebug();
                         break;
                     default:
                         WriteLine("That is not a valid number. Try again. ");

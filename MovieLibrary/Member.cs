@@ -283,7 +283,27 @@ namespace MovieLibrary
             //WriteLine($"Borrow Count: {member.borrowCount}");
         }
 
-        // Checks if movie exists in member's borrow history to prevent renting multiple copies of the same movie
+        public static void DisplayTop3Movies()
+        {
+            WriteLine();
+            WriteLine("========= Display Top 3 Movies Rented By Members ===========");
+            WriteLine();
+            WriteLine("Check out what's popular! | (0 to Exit)");
+            WriteLine("------------------------------------------------------------");
+            WriteLine();
+
+            //Movie[] topMovies = MovieCollection.Movies.DisplayTop3();
+            MovieCollection.Movies.DisplayTop3();
+            
+
+            //for (int i = 0; i < topMovies.Length; i++)
+            //{
+            //    WriteLine(topMovies[i]);
+            //}
+        }
+
+        // Checks if movie exists in member's borrow history to
+        // prevent renting multiple copies of the same movie
         public static bool SearchHistory(Member member, string title)
         {
 

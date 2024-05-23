@@ -209,6 +209,68 @@ namespace MovieLibrary
 			
         }
 
+		public void DisplayTop3()
+		{
+			QuickSort(table, 0, table.Length - 1);
+
+            WriteLine("Top 3 Movies:");
+            for (int i = 0; i < table.Length; i++)
+            {
+				if (table[i].Key != empty && table[i].Key != deleted)
+				{
+                    WriteLine($"{table[i].Key}: {table[i].Value.frequency}");
+                }
+                
+            }
+
+        }
+
+		private void QuickSort(KeyValuePair<string, Movie>[] table, int low, int high)
+		{
+			if (low < high)
+			{
+				int pivot = Partition(table, low, high);
+
+				QuickSort(table, low, pivot - 1);
+				QuickSort(table, pivot + 1, high);
+			}
+		}
+
+
+        private int Partition(KeyValuePair<string, Movie>[] table, int low, int high)
+		{
+			Movie pivot = table[high].Value;
+
+			// Decrement high until there is non-null value to set as pivot
+            while (high > low && pivot == null)
+            {
+                high--;
+                pivot = table[high].Value; 
+            }
+
+            //WriteLine("high: " + high);
+
+
+            int i = low - 1;
+
+			for (int j = low; j < high; j++)
+			{
+				if (table[j].Key != empty && table[j].Key != deleted && table[j].Value.frequency >= pivot.frequency)
+				{
+					i++;
+					KeyValuePair<string, Movie> temp = table[i];
+					table[i] = table[j];
+					table[j] = temp;
+				}	
+			}
+
+			KeyValuePair<string, Movie> temp2 = table[i + 1];
+			table[i + 1] = table[high];
+			table[high] = temp2;
+
+			return i + 1;
+		}
+
         /* pre: key >= 0
 		/* post: return the bucket (location) for the given key
 		*/
@@ -258,26 +320,26 @@ namespace MovieLibrary
         {
             Movie[] mockData = new Movie[]
             {
-                new Movie("Inception", "Sci-Fi", "PG-13", 148, 9),
-				new Movie("The Matrix", "Sci-Fi", "R", 136, 8),
-				new Movie("Mulan", "Thriller", "R", 118, 8),
-				new Movie("Jurassic Park", "Action", "PG-13", 127, 7),
-				new Movie("The Avengers", "Action", "PG-13", 143, 8),
-				new Movie("Titanic", "Romance", "PG-13", 195, 7),
-				new Movie("Mamma Mia", "Fantasy", "PG", 152, 9),
-				new Movie("The Lion King", "Animation", "G", 88, 9),
-				new Movie("Interstellar", "Sci-Fi", "PG-13", 169, 9),
-				new Movie("Forrest Gump", "Drama", "PG-13", 142, 9), 
-				new Movie("The Intern", "Crime", "R", 202, 9),
-				new Movie("Ocean 8", "Biography", "R", 195, 9),
-				new Movie("Goodfellas", "Crime", "R", 146, 8),
-				new Movie("Lilo and Stitch", "Drama", "R", 189, 9),
-				new Movie("Fight Club", "Drama", "R", 139, 8),
-				new Movie("Avatar", "Sci-Fi", "PG-13", 162, 8),
-				new Movie("Gladiator", "Action", "R", 155, 8),
-				new Movie("Braveheart", "Biography", "R", 178, 9),
-				new Movie("The Departed", "Crime", "R", 151, 9),
-				new Movie("Saving Private Ryan", "War", "R", 169, 9)
+				new Movie("Inception", "Sci-Fi", "PG-13", 148, 9) { frequency = 15 },
+				new Movie("The Matrix", "Sci-Fi", "R", 136, 8) { frequency = 12 },
+				new Movie("Mulan", "Thriller", "R", 118, 8) { frequency = 10 },
+				new Movie("Jurassic Park", "Action", "PG-13", 127, 7) { frequency = 20 },
+				new Movie("The Avengers", "Action", "PG-13", 143, 8) { frequency = 25 },
+				new Movie("Titanic", "Romance", "PG-13", 195, 7) { frequency = 30 },
+				new Movie("Mamma Mia", "Fantasy", "PG", 152, 9) { frequency = 5 },
+				new Movie("The Lion King", "Animation", "G", 88, 9) { frequency = 18 },
+				new Movie("Interstellar", "Sci-Fi", "PG-13", 169, 9) { frequency = 22 },
+				new Movie("Forrest Gump", "Drama", "PG-13", 142, 9) { frequency = 35 },
+				new Movie("The Intern", "Crime", "R", 202, 9) { frequency = 7 },
+				new Movie("Ocean 8", "Biography", "R", 195, 9) { frequency = 9 },
+				new Movie("Goodfellas", "Crime", "R", 146, 8) { frequency = 13 },
+				new Movie("Lilo and Stitch", "Drama", "R", 189, 9) { frequency = 14 },
+				new Movie("Fight Club", "Drama", "R", 139, 8) { frequency = 28 },
+				new Movie("Avatar", "Sci-Fi", "PG-13", 162, 8) { frequency = 19 },
+				new Movie("Gladiator", "Action", "R", 155, 8) { frequency = 24 },
+				new Movie("Braveheart", "Biography", "R", 178, 9) { frequency = 16 },
+				new Movie("The Departed", "Crime", "R", 151, 9) { frequency = 23 },
+				new Movie("Alice in Wonderland", "War", "R", 169, 9) { frequency = 21 }
         };
 
             // Add movies -- rewriting to avoid printing feedback messages when initialized
