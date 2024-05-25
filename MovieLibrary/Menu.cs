@@ -40,8 +40,7 @@ namespace MovieLibrary
                 switch(choice)
                 {
                     case 1:
-                        //StaffLogin.DisplayStaffLogin();
-                        Member.DisplayTop3Movies();
+                        StaffLogin.DisplayStaffLogin();
                         break;
 
                     case 2:

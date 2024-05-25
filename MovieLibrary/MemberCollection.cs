@@ -126,23 +126,26 @@ namespace MovieLibrary
             return null;
         }
 
-        //public void Print()
-        //{
-        //    for (int i = 0; i < memberArray.Length; i++)
-        //    {
-        //        WriteLine(memberArray[i].firstName);
-        //    }
-        //}
+        public void Print()
+        {
+            for (int i = 0; i < memberArray.Length; i++)
+            {
+                WriteLine(memberArray[i].firstName + " " + memberArray[i].lastName + ", " + memberArray[i].phoneNumber);
+            }
+        }
 
         // Mock Data to populate collection
         public void AddMockData()
         {
             Member[] mockData = new Member[]
             {
-                new Member("Alice", "Smith", 0000, 037291739),
-                new Member("Bob", "Yong", 1111, 4579824),
+                new Member("Alice", "Smith", 0000, 0431565721),
+                new Member("Bob", "Yong", 1111, 0478493029),
                 new Member("Dylan", "Tan", 2222, 037917390),
-                new Member("Paul", "Zhou", 3333, 7934799)
+                new Member("Paul", "Zhou", 3333, 0124917584),
+                new Member("Lee", "Ming", 4444, 0493029758),
+                new Member("Lee", "Ning", 5555, 0438295739),
+                new Member("Cole", "Sprouse", 6666, 0475842840)
             };
 
             // Add members

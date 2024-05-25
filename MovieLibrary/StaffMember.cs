@@ -21,12 +21,13 @@ namespace MovieLibrary
 
 		public static void AddDVD()
 		{
-            string title ="";
+            string title = "";
             string genre = "";
             string classification ="";
             int duration;
             int copies;
 
+            WriteLine();
             WriteLine("===================== Add DVD ========================");
             WriteLine();
             WriteLine("Enter DVD information below: | (0 to Exit)");
@@ -168,7 +169,6 @@ namespace MovieLibrary
             {
                 WriteLine("Oops. Movie doesn't exist in the system.");
             }
-                //MovieCollection.Movies.Delete(title, copies);
         }
 
         public static void RegisterMember()

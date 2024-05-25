@@ -292,14 +292,12 @@ namespace MovieLibrary
             WriteLine("------------------------------------------------------------");
             WriteLine();
 
-            //Movie[] topMovies = MovieCollection.Movies.DisplayTop3();
-            MovieCollection.Movies.DisplayTop3();
-            
+            Movie[] top3Movies = MovieCollection.Movies.DisplayTop3();
 
-            //for (int i = 0; i < topMovies.Length; i++)
-            //{
-            //    WriteLine(topMovies[i]);
-            //}
+            for (int i = 0; i < top3Movies.Length; i++)
+            {
+                WriteLine($"{i + 1}. " + top3Movies[i].title + $", borrowed {top3Movies[i].frequency} times");
+            }
         }
 
         // Checks if movie exists in member's borrow history to

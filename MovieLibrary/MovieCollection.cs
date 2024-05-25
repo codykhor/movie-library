@@ -206,23 +206,27 @@ namespace MovieLibrary
 						", Duration: " + table[i].Value.durationInMin + ", Total Copies: " + table[i].Value.totalCopies + "freq: " + table[i].Value.frequency);
             }
             WriteLine();
-			
         }
 
-		public void DisplayTop3()
+		// how to maintain initial postion after sorting? 
+		public Movie[] DisplayTop3()
 		{
-			QuickSort(table, 0, table.Length - 1);
+			// Copy hash table to keep initial table intact
+			var tableSorted = new KeyValuePair<string, Movie>[table.Length];
+			Array.Copy(table, tableSorted, table.Length);
 
-            WriteLine("Top 3 Movies:");
-            for (int i = 0; i < table.Length; i++)
+			QuickSort(tableSorted, 0, table.Length - 1);
+
+			Movie[] top3Movies = new Movie[Math.Min(3, Count)];
+            for (int i = 0; i < top3Movies.Length; i++)
             {
-				if (table[i].Key != empty && table[i].Key != deleted)
+				if (tableSorted[i].Key != empty && tableSorted[i].Key != deleted)
 				{
-                    WriteLine($"{table[i].Key}: {table[i].Value.frequency}");
+					top3Movies[i] = tableSorted[i].Value;
                 }
-                
             }
 
+			return top3Movies;
         }
 
 		private void QuickSort(KeyValuePair<string, Movie>[] table, int low, int high)
@@ -326,7 +330,7 @@ namespace MovieLibrary
 				new Movie("Jurassic Park", "Action", "PG-13", 127, 7) { frequency = 20 },
 				new Movie("The Avengers", "Action", "PG-13", 143, 8) { frequency = 25 },
 				new Movie("Titanic", "Romance", "PG-13", 195, 7) { frequency = 30 },
-				new Movie("Mamma Mia", "Fantasy", "PG", 152, 9) { frequency = 5 },
+				new Movie("Mamma Mia", "Fantasy", "PG", 152, 9) { frequency = 35 },
 				new Movie("The Lion King", "Animation", "G", 88, 9) { frequency = 18 },
 				new Movie("Interstellar", "Sci-Fi", "PG-13", 169, 9) { frequency = 22 },
 				new Movie("Forrest Gump", "Drama", "PG-13", 142, 9) { frequency = 35 },
