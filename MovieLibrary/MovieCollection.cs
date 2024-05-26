@@ -251,9 +251,6 @@ namespace MovieLibrary
                 pivot = table[high].Value; 
             }
 
-            //WriteLine("high: " + high);
-
-
             int i = low - 1;
 
 			for (int j = low; j < high; j++)
