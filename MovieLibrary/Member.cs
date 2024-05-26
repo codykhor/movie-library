@@ -42,7 +42,7 @@ namespace MovieLibrary
             WriteLine();
             WriteLine("================== Browse All DVDs ===================");
             WriteLine();
-            WriteLine("Information about all movies DVDs | (0 to Exit)");
+            WriteLine("Information about all movies DVDs");
             WriteLine("------------------------------------------------------");
             WriteLine();
 
@@ -100,7 +100,7 @@ namespace MovieLibrary
                 else
                 {
                     WriteLine($"Title: {searchedMovie.title}, Genre: {searchedMovie.genre}, Classification: {searchedMovie.classification}, " +
-                        $"Duration: {searchedMovie.durationInMin}, Total Copies: {searchedMovie.totalCopies}, {searchedMovie.membersRenting[1]}");
+                        $"Duration: {searchedMovie.durationInMin}, Total Copies: {searchedMovie.totalCopies}");
                     WriteLine();
                 }
 
@@ -176,7 +176,7 @@ namespace MovieLibrary
                 }
                 else
                 {
-                    WriteLine("Movie doesn't exist in the system");
+                    WriteLine("Movie doesn't exist in the system.");
                     WriteLine();
                 }
             }
@@ -265,6 +265,14 @@ namespace MovieLibrary
 
         public static void PrintBorrowHistory(Member member)
         {
+
+            WriteLine();
+            WriteLine("============= Current Borrowing Movies ================");
+            WriteLine();
+            WriteLine("Check your rental history");
+            WriteLine("-------------------------------------------------------");
+            WriteLine();
+
             if (member.borrowHistory[0] == null)
             {
                 WriteLine("There are currently no movies being borrowed.");
@@ -288,11 +296,11 @@ namespace MovieLibrary
             WriteLine();
             WriteLine("========= Display Top 3 Movies Rented By Members ===========");
             WriteLine();
-            WriteLine("Check out what's popular! | (0 to Exit)");
+            WriteLine("Check out what's popular!");
             WriteLine("------------------------------------------------------------");
             WriteLine();
 
-            Movie[] top3Movies = MovieCollection.Movies.DisplayTop3();
+            Movie[] top3Movies = MovieCollection.Movies.DisplayTop3Movies();
 
             for (int i = 0; i < top3Movies.Length; i++)
             {

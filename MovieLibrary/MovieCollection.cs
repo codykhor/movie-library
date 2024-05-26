@@ -141,7 +141,7 @@ namespace MovieLibrary
 				else if (copies < table[bucket].Value.totalCopies)
 				{
 					table[bucket].Value.totalCopies -= copies;
-					return 2;
+                    return 2;
 				}
 				else
 				{
@@ -208,8 +208,7 @@ namespace MovieLibrary
             WriteLine();
         }
 
-		// how to maintain initial postion after sorting? 
-		public Movie[] DisplayTop3()
+		public Movie[] DisplayTop3Movies()
 		{
 			// Copy hash table to keep initial table intact
 			var tableSorted = new KeyValuePair<string, Movie>[table.Length];

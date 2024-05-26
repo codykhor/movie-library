@@ -55,13 +55,10 @@ namespace MovieLibrary
                         return null;
 
                     }
-                    else if (input?.Length == 4)
+                    else if (input?.Length == 4 && int.TryParse(input, out pwd))
                     {
-                        if (int.TryParse(input, out pwd))
-                        {
                             password = pwd;
                             isValidPwd = true;
-                        }
                     }
                     else
                     {

@@ -20,14 +20,13 @@ namespace MovieLibrary
                 WriteLine("4. Return a movie DVD");
                 WriteLine("5. List current borrowing movies");
                 WriteLine("6. Display the top 3 movies rented by the members");
-                WriteLine("7. PRINT FOR DEBUG - TO BE REMOVED LATER");
                 WriteLine("0. Return the main menu");
                 WriteLine();
                 Write("Enter your choice: ");
 
                 string? input = ReadLine();
-                // CHANGE BACK TO 6 AFTER REMOVING DEBUG OPTION
-                if (!int.TryParse(input, out int choice) || choice < 0 || choice > 7)
+
+                if (!int.TryParse(input, out int choice) || choice < 0 || choice > 6)
                 {
                     WriteLine("That is not a valid number. Try again. ");
                     WriteLine();
@@ -63,9 +62,6 @@ namespace MovieLibrary
                     case 6:
                         Member.DisplayTop3Movies();
                         WriteLine();
-                        break;
-                    case 7:
-                        StaffMember.PrintForDebug();
                         break;
                     default:
                         WriteLine("That is not a valid number. Try again. ");

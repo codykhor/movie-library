@@ -151,17 +151,18 @@ namespace MovieLibrary
             title = FirstCharToUpper(title);
             WriteLine();
             copies = CheckIntInput("Enter number of copies to delete: ");
+            int deletion = MovieCollection.Movies.Delete(title, copies);
 
             // Remove movie from collection
-            if (MovieCollection.Movies.Delete(title, copies) == 1)
+            if (deletion == 1)
             {
                 WriteLine("Movie has been removed from system.");
             }
-            else if (MovieCollection.Movies.Delete(title, copies) == 2)
+            else if (deletion == 2)
             {
                 WriteLine("The current number of copies available is updated.");
             }
-            else if (MovieCollection.Movies.Delete(title, copies) == 3)
+            else if (deletion == 3)
             {
                 WriteLine("The requested number of copies to delete exceeds the current number of copies available in the library.");
             }
@@ -204,13 +205,10 @@ namespace MovieLibrary
                     break;
 
                 }
-                else if (input?.Length == 4)
+                else if (input?.Length == 4 && int.TryParse(input, out pwd))
                 {
-                    if (int.TryParse(input, out pwd))
-                    {
-                        password = pwd;
-                        isValidPwd = true;
-                    }
+                    password = pwd;
+                    isValidPwd = true;
                 }
                 else
                 {
@@ -220,7 +218,7 @@ namespace MovieLibrary
             }
 
             // Add new member to collection
-            Member newMember = new Member(firstName, lastName, phoneNumber, password);
+            Member newMember = new Member(firstName, lastName, password, phoneNumber);
             if (MemberCollection.Members.Insert(newMember) == 1)
             {
                 WriteLine();
@@ -260,16 +258,19 @@ namespace MovieLibrary
             {
                 WriteLine();
                 WriteLine($"Member is still holding {borrowCount} DVDs, can't be removed from the system. ");
+                WriteLine();
             }
             else if (borrowCount == 0)
             {
                 WriteLine();
                 WriteLine("Member removed successfully.");
+                WriteLine();
             }
             else
             {
                 WriteLine();
                 WriteLine("Member doesn't exist.");
+                WriteLine();
             }
         }
 
@@ -278,6 +279,12 @@ namespace MovieLibrary
             string firstName;
             string lastName;
             int phoneNumber;
+
+            WriteLine();
+            WriteLine("================== Find Member's Phone Number =================");
+            WriteLine();
+            WriteLine("Enter member's personal information below: | (0 to Exit)");
+            WriteLine("---------------------------------------------------------------");
 
             // Get full name
             WriteLine();
@@ -289,7 +296,7 @@ namespace MovieLibrary
             if (phoneNumber != -1)
             {
                 WriteLine();
-                WriteLine($"The phone number for {firstName} {lastName} is {phoneNumber}");
+                WriteLine($"The phone number for {firstName} {lastName} is 0{phoneNumber}");
                 WriteLine();
             }
             else
@@ -422,12 +429,21 @@ namespace MovieLibrary
         {
             Write(question);
             int num;
-            while (!int.TryParse(ReadLine(), out num) || num == 0)
+            while (true)
             {
-                if (num == 0)
+                string? input = ReadLine();
+
+                if (int.TryParse(input, out num))
                 {
-                    StaffMenu.DisplayStaffMenu();
-                    break;
+                    if (num == 0)
+                    {
+                        StaffMenu.DisplayStaffMenu();
+                        break;
+                    }
+                    else
+                    {
+                        return num;
+                    }
                 }
                 else
                 {

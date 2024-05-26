@@ -65,7 +65,6 @@ namespace MovieLibrary
          * returns array index
          * returns -1 if not found
         */
-        // COME BACK AND IMPROVE
         public int Search(string firstName, string lastName)
         {
             for (int i = 0; i < count; i++)
@@ -83,37 +82,45 @@ namespace MovieLibrary
 
         public int Remove(string firstName, string lastName)
         {
-            for (int i = 0; i < count; i++)
+            int index = Search(firstName, lastName);
+
+
+            if (index == -1)
             {
-                if(Search(firstName, lastName) != -1)
-                {
-                    if (memberArray[i].borrowCount == 0)
-                    {
-                        return 0;
-                        
-                    }
-                    else
-                    {
-                        return memberArray[i].borrowCount;
-                    }
-                }
+                return -1;
             }
-            return -1;
+
+            if (memberArray[index].borrowCount != 0)
+            {
+                return memberArray[index].borrowCount;
+            }
+
+            for (int j = index; j < memberArray.Length - 1; j++)
+            {
+                memberArray[j] = memberArray[j + 1];
+            }
+
+            memberArray[memberArray.Length - 1] = null;
+            count--;
+            return 0;
+
         }
 
 
-        // COME BACK AND IMPROVE
         public int FindPhoneNumber(string firstName, string lastName)
         {
-            for (int i = 0; i < count; i++)
-            {
-                if (Search(firstName, lastName) != -1)
-                {
-                    return memberArray[i].phoneNumber;
-                }
+            int index = Search(firstName, lastName);
 
+
+            if (index == -1)
+            {
+                return -1;
             }
-            return -1;
+            else
+            {
+                WriteLine(memberArray[index].firstName + memberArray[index].lastName + memberArray[index].phoneNumber);
+                return memberArray[index].phoneNumber;
+            }
         }
 
         public Member Authenticate(string firstName, string lastName, int password)
@@ -128,10 +135,20 @@ namespace MovieLibrary
 
         public void Print()
         {
+            if (memberArray == null)
+            {
+                WriteLine("No members in system.");
+                return;
+            }
+
             for (int i = 0; i < memberArray.Length; i++)
             {
-                WriteLine(memberArray[i].firstName + " " + memberArray[i].lastName + ", " + memberArray[i].phoneNumber);
+                if (memberArray[i] != null)
+                {
+                    WriteLine(memberArray[i].firstName + " " + memberArray[i].lastName + ", " + "0" + memberArray[i].phoneNumber);
+                }
             }
+            WriteLine();
         }
 
         // Mock Data to populate collection

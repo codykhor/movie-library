@@ -20,14 +20,12 @@ namespace MovieLibrary
                 WriteLine("4. Remove a registered member from system");
                 WriteLine("5. Find a member's contact phone number, given the member's name");
                 WriteLine("6. Find members who are currently renting a particular movie");
-                WriteLine("7. PRINT TO DEBUG - TO BE DELETED AFTERWARDS");
                 WriteLine("0. Return to main menu");
                 WriteLine();
                 Write("Enter your choice: ");
 
                 string? input = ReadLine();
-                // CHANGE BACK TO 6 AFTER REMOVING DEBUG OPTION
-                if (!int.TryParse(input, out int choice) || choice < 0 || choice > 7)
+                if (!int.TryParse(input, out int choice) || choice < 0 || choice > 6)
                 {
                     WriteLine("That is not a valid number. Try again. ");
                     WriteLine();
@@ -62,9 +60,6 @@ namespace MovieLibrary
                         break;
                     case 6:
                         StaffMember.FindRentingMembers();
-                        break;
-                    case 7:
-                        StaffMember.PrintForDebug();
                         break;
                     default:
                         WriteLine("That is not a valid number. Try again. ");
